@@ -1,6 +1,5 @@
-from flask_login import login_user, logout_user, current_user
 from flask_restful import Resource
-
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from data.db_session import create_session
 from data.users import User
 
@@ -8,33 +7,26 @@ from .parsers.parsers_user import parserRegisterUser, parserLoginUser
 
 
 class Auth(Resource):
+    @jwt_required()
     def get(self):
-        if current_user.is_authenticated:
-            return {
-                "resultCode": 0,
-                "data": {
-                    "id": current_user.id,
-                    "email": current_user.email,
-                },
-            }
-        else:
-            return {"resultCode": 1, "data": {"id": None, "email": None}}
+        userId = get_jwt_identity()
+        return {"resultCode": 0, "data": {"id": userId}}
 
     def post(self):
         args = parserLoginUser.parse_args()
         session = create_session()
         user = session.query(User).filter(User.email == args["email"]).first()
         if user and user.check_password(args["password"]):
-            login_user(user, remember=args["remember_me"])
-            return {"resultCode": 0, "data": {"userId": user.id}}
+            token = user.get_token()
+            return {"resultCode": 0, "data": {"id": user.id, "access_token": f"{token}"}}
         else:
-            return {"resultCode": 1, "data": {"userId": None}}
+            return {"resultCode": 1,
+                    "message": "wrong email or password",
+                    "data": {"id": None, "access_token": None}}
 
-    def delete(self):
-        if current_user.is_authenticated:
-            logout_user()
-            return {"resultCode": 0}
-        return {"resultCode": 1}
+    # @jwt_required()
+    # def delete(self):
+    #     return {"resultCode": 0}
 
 
 class UserResource(Resource):
@@ -76,8 +68,9 @@ class UserListResource(Resource):
         user = User(
             nickname=args["nickname"],
             email=args["email"],
+            password=args["password"]
         )
-        user.set_password(args["password"])
         session.add(user)
         session.commit()
-        return {"resultCode": 0}
+        token = user.get_token()
+        return {"resultCode": 0, "data": {"access_token": f"{token}"}}

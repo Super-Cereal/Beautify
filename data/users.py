@@ -1,16 +1,14 @@
 import sqlalchemy as sql
 from sqlalchemy_serializer import SerializerMixin
 
-from itsdangerous import (TimedJSONWebSignatureSerializer
-                          as Serializer, BadSignature, SignatureExpired)
-
-from flask_login import UserMixin
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .base_model import BaseModel
 
 
-class User(BaseModel, UserMixin, SerializerMixin):
+class User(BaseModel, SerializerMixin):
     __tablename__ = "users"
 
     nickname = sql.Column(sql.String)
@@ -18,20 +16,17 @@ class User(BaseModel, UserMixin, SerializerMixin):
     hashed_password = sql.Column(sql.String)
     # collection = sql.orm.relation("Collection", back_populates="user")
 
-    @property
-    def password(self):
-        return None
+    def __init__(self, **kwargs):
+        self.nickname = kwargs.get("nickname")
+        self.email = kwargs.get("email")
+        self.hashed_password = generate_password_hash(kwargs.get("password"))
 
-    @password.setter
-    def password(self, password):
-        self.set_password(password)
-
-    def set_password(self, password):
-        self.hashed_password = generate_password_hash(password)
+    def get_token(self, expire_time=24):
+        expires_delta = timedelta(expire_time)
+        token = create_access_token(
+            identity=self.id, expires_delta=expires_delta
+        )
+        return token
 
     def check_password(self, value):
         return check_password_hash(self.hashed_password, value)
-
-    def generate_auth_token(self, expiration=3000):
-        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'id': self.id})

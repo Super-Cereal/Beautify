@@ -3,6 +3,7 @@ from data.users import User
 
 from flask import Flask, render_template
 from flask_restful import Api
+from flask_jwt_extended import JWTManager
 
 from resources import resources_user
 
@@ -15,6 +16,11 @@ api.add_resource(resources_user.UserResource, "/api/v1.0/users/<int:user_id>")
 api.add_resource(resources_user.UserListResource, "/api/v1.0/users")
 
 db_session.global_init("./data/db/main_db.sqlite")
+
+
+jwt = JWTManager(app)
+jwt.unauthorized_loader(
+    lambda msg: {"resultCode": 1, "message": msg, "data": {"id": None}})
 
 
 @app.errorhandler(404)
