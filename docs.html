@@ -1,12 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/scss/docs.css" />
     <title>Document</title>
-</head>
-<body>
-    <h1>docs</h1>
-</body>
+  </head>
+  <body>
+    <h1>Documentation</h1>
+    <h2>BaseUrl: <span class="fontColor_gray">http://127.0.0.1:5000/api/v.1.0</span></h2>
+    <section>
+      <h2>Authentification</h2>
+      <h3 class="fontColor_gray">/auth</h3>
+      <div class="Routes">
+        <div class="Routes-Line RouteLine">
+          <div class="RouteLine-Route fontWeight_bold">get</div>
+          <p>Узнает, залогинен ли текущий пользователь</p>
+          <div class="RouteLine-Info">
+            <div class="DropDown">
+              <input id="DropDown_auth_get_response" type="checkbox" />
+              <label for="DropDown_auth_get_response">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "resultCode": (boolean),
+  "data": {
+    "id": (number), 
+    "email": (string)
+  }
+}                </code></pre>
+                <p class="RouteLine-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1, если пользователь залогинен или
+                  нет <br />
+                  <span class="fontWeight_bold">id:</span> id текущего пользователя или Null<br />
+                  <span class="fontWeight_bold">email:</span> email текущего пользователя или Null
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Routes-Line RouteLine">
+          <div class="RouteLine-Route fontWeight_bold">post</div>
+          <p>Позволяет войти в аккаунт</p>
+          <div class="RouteLine-Info">
+            <div class="DropDown">
+              <input id="DropDown_auth_post_request" type="checkbox" />
+              <label for="DropDown_auth_post_request">Request</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "email": required(string),
+  "password": required(string),
+  "remember_me": (boolean)
+}               </code></pre>
+              </div>
+            </div>
+            <div class="DropDown">
+              <input id="DropDown_auth_post_pesponse" type="checkbox" />
+              <label for="DropDown_auth_post_pesponse">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{ 
+  "resultCode": (boolean),
+  "data": {
+    "userId": (number)
+  }
+}                </code></pre>
+                <p class="RouteLine-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1 успешна операция или нет <br />
+                  <span class="fontWeight_bold">userId:</span> id пользователя, либо Null
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Routes-Line RouteLine">
+          <div class="RouteLine-Route fontWeight_bold">delete</div>
+          <p>Разлогиневает пользователя</p>
+          <div class="RouteLine-Info">
+            <div class="DropDown">
+              <input id="DropDown_auth_delete_response" type="checkbox" />
+              <label for="DropDown_auth_delete_response">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "resultCode": (boolean),
+}                </code></pre>
+                <p class="RouteLine-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1, если операция прошла успешна или
+                  нет
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Authentification</h2>
+      <h3 class="fontColor_gray">/auth</h3>
+      <div class="Routes">
+        <div class="Routes-Line RouteLine">
+          <div class="RouteLine-Route fontWeight_bold">get</div>
+          <p>Узнает, залогинен ли текущий пользователь</p>
+          <div class="RouteLine-Info">
+            <div class="DropDown">
+              <input id="DropDown_auth_get_response" type="checkbox" />
+              <label for="DropDown_auth_get_response">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "resultCode": (boolean),
+  "data": {
+    "id": (number), 
+    "email": (string)
+  }
+}                </code></pre>
+                <p class="RouteLine-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1, если пользователь залогинен или
+                  нет <br />
+                  <span class="fontWeight_bold">id:</span> id текущего пользователя или Null<br />
+                  <span class="fontWeight_bold">email:</span> email текущего пользователя или Null
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Routes-Line RouteLine">
+          <div class="RouteLine-Route fontWeight_bold">post</div>
+          <p>Позволяет войти в аккаунт</p>
+          <div class="RouteLine-Info">
+            <div class="DropDown">
+              <input id="DropDown_auth_post_request" type="checkbox" />
+              <label for="DropDown_auth_post_request">Request</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "email": required(string),
+  "password": required(string),
+  "remember_me": (boolean)
+}               </code></pre>
+              </div>
+            </div>
+            <div class="DropDown">
+              <input id="DropDown_auth_post_pesponse" type="checkbox" />
+              <label for="DropDown_auth_post_pesponse">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{ 
+  "resultCode": (boolean),
+  "data": {
+    "userId": (number)
+  }
+}                </code></pre>
+                <p class="RouteLine-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1 успешна операция или нет <br />
+                  <span class="fontWeight_bold">userId:</span> id пользователя, либо Null
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Routes-Line RouteLine">
+          <div class="RouteLine-Route fontWeight_bold">delete</div>
+          <p>Разлогиневает пользователя</p>
+          <div class="RouteLine-Info">
+            <div class="DropDown">
+              <input id="DropDown_auth_delete_response" type="checkbox" />
+              <label for="DropDown_auth_delete_response">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "resultCode": (boolean),
+}                </code></pre>
+                <p class="RouteLine-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1, если операция прошла успешна или
+                  нет
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

@@ -9,7 +9,6 @@ from .parsers.parsers_user import parserRegisterUser, parserLoginUser
 
 class Auth(Resource):
     def get(self):
-        return {"data": f"{current_user}"}
         if current_user.is_authenticated:
             return {
                 "resultCode": 0,
@@ -27,9 +26,9 @@ class Auth(Resource):
         user = session.query(User).filter(User.email == args["email"]).first()
         if user and user.check_password(args["password"]):
             login_user(user, remember=args["remember_me"])
-            return {"resultCode": 0, "userId": user.id, "current_user": f"{current_user}"}
+            return {"resultCode": 0, "data": {"userId": user.id}}
         else:
-            return {"resultCode": 1, "userId": None}
+            return {"resultCode": 1, "data": {"userId": None}}
 
     def delete(self):
         if current_user.is_authenticated:

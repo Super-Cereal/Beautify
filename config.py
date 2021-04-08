@@ -1,5 +1,3 @@
-from datetime import timedelta as datetime_timedelta
-SECRET_KEY = 'yandexlyceum_secret_key'
+SECRET_KEY = 's^i0)lw+(6e)ddmiz+5v4at2gxjww(@3k*ekrhood6-#uo)1y2'
 CSRF_ENABLED = True
-PERMANENT_SESSION_LIFETIME = datetime_timedelta(minutes=15)
 DEBUG = True

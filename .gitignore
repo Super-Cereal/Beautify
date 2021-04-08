@@ -1,2 +1,4 @@
 .prettierrc
 __pycache__
+gulpfile.js
+scss
