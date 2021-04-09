@@ -2,7 +2,6 @@ import requests
 
 
 def req(req_type, url, headers={}):
-    headers = ''
     base_url = "http://127.0.0.1:5000/api/v1.0"
     if req_type == "get":
         res = requests.get(f'{base_url}/{url}', headers=headers)

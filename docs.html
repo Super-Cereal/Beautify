@@ -11,20 +11,20 @@
     <h1>Documentation</h1>
     <h2>BaseUrl: <span class="fontColor_gray">http://127.0.0.1:5000/api/v.1.0</span></h2>
     <section>
-      <h2>Authentification</h2>
+      <h2 class="Routes-Name">Authentification</h2>
       <h3 class="fontColor_gray">/auth</h3>
       <div class="Routes">
-        <div class="Routes-Line RouteLine">
-          <div class="RouteLine-Route fontWeight_bold">get</div>
+        <div class="Routes-Block RouteBlock">
+          <div class="RouteBlock-Route fontWeight_bold">get</div>
           <p>Узнает, залогинен ли текущий пользователь</p>
-          <div class="RouteLine-Info">
+          <div class="RouteBlock-Info">
             <div class="DropDown">
               <input id="DropDown_auth_get_request" type="checkbox" />
               <label for="DropDown_auth_get_request">Request Headers</label>
               <div class="DropDown-Content">
                 <pre><code>Headers:
 <span class="fontColor_blue">"Authorization": "Bearer &#8249access_token&#8250"</span></code></pre>
-                <p class="RouteLine-InfoDocs">
+                <p class="RouteBlock-InfoDocs">
                   <span class="fontWeight_bold">access_token:</span> токен, выдаваемый при регистрации или
                   логине
                 </p>
@@ -38,23 +38,25 @@
   "resultCode": <span class="fontColor_red">required</span>(boolean),
   "message": (string)
   "data": {
-    "id": <span class="fontColor_red">required</span>(number)
+    "id": <span class="fontColor_red">required</span>(number),
+    "nickname": <span class="fontColor_red">required</span>(number),
+    "email": <span class="fontColor_red">required</span>(number),
   }
 }                </code></pre>
-                <p class="RouteLine-InfoDocs">
+                <p class="RouteBlock-InfoDocs">
                   <span class="fontWeight_bold">resultCode:</span> 0 или 1, если пользователь залогинен или
                   нет<br />
+                  <span class="fontWeight_bold">data</span> Содержит инфу о текущем пользователе<br />
                   <span class="fontWeight_bold">message:</span> Содержит ошибку если resultCode = 1<br />
-                  <span class="fontWeight_bold">data.id:</span> id текущего пользователя
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div class="Routes-Line RouteLine">
-          <div class="RouteLine-Route fontWeight_bold">post</div>
+        <div class="Routes-Block RouteBlock">
+          <div class="RouteBlock-Route fontWeight_bold">post</div>
           <p>Позволяет войти в аккаунт</p>
-          <div class="RouteLine-Info">
+          <div class="RouteBlock-Info">
             <div class="DropDown">
               <input id="DropDown_auth_post_request" type="checkbox" />
               <label for="DropDown_auth_post_request">Request</label>
@@ -74,15 +76,16 @@
   "message": (string),
   "data": {
     "id": <span class="fontColor_red">required</span>(number),
-    "accsess_token": <span class="fontColor_red">required</span>(string)
+    "nickname": <span class="fontColor_red">required</span>(number),
+    "email": <span class="fontColor_red">required</span>(number),
+    "access_token": <span class="fontColor_red">required</span>(string)
   }
 }                </code></pre>
-                <p class="RouteLine-InfoDocs">
+                <p class="RouteBlock-InfoDocs">
                   <span class="fontWeight_bold">resultCode:</span> 0 или 1 успешна операция или нет<br />
                   <span class="fontWeight_bold">message:</span> Содержит ошибку если resultCode = 1<br />
-                  <span class="fontWeight_bold">id:</span> id пользователя, либо Null<br />
-                  <span class="fontWeight_bold">accsess_token:</span> токен авторизации для пользователя, либо
-                  Null
+                  <span class="fontWeight_bold">data</span> Содержит инфу о текущем пользователе<br />
+                  <span class="fontWeight_bold">data.access_token:</span> Токен авторизации для пользователя
                 </p>
               </div>
             </div>
@@ -90,5 +93,135 @@
         </div>
       </div>
     </section>
+    <section>
+      <h2 class="Routes-Name">User resourses</h2>
+      <h3 class="fontColor_gray">/users/&#8249int:user_id&#8250</h3>
+      <div class="Routes">
+        <div class="Routes-Block RouteBlock">
+          <div class="RouteBlock-Route fontWeight_bold">get</div>
+          <p>Возвращает инфу о запрошенном пользователе</p>
+          <div class="RouteBlock-Info">
+            <div class="DropDown">
+              <input id="DropDown_user_get_response" type="checkbox" />
+              <label for="DropDown_user_get_response">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "resultCode": <span class="fontColor_red">required</span>(boolean),
+  "message": (string)
+  "data": {
+    "id": <span class="fontColor_red">required</span>(number),
+    "nickname": <span class="fontColor_red">required</span>(number),
+    "email": <span class="fontColor_red">required</span>(number)
+  }
+}                </code></pre>
+                <p class="RouteBlock-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1, если пользователь залогинен или
+                  нет<br />
+                  <span class="fontWeight_bold">message:</span> Содержит ошибку если resultCode = 1<br />
+                  <span class="fontWeight_bold">data</span> Содержит инфу о текущем пользователе
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Routes-Block RouteBlock">
+          <div class="RouteBlock-Route fontWeight_bold">delete</div>
+          <p>Удалит выбранного пользователя</p>
+          <div class="RouteBlock-Info">
+            <div class="DropDown">
+              <input id="DropDown_user_delete_pesponse" type="checkbox" />
+              <label for="DropDown_user_delete_pesponse">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{ 
+  "resultCode": <span class="fontColor_red">required</span>(boolean),
+  "message": (string),
+}                </code></pre>
+                <p class="RouteBlock-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1 успешна операция или нет<br />
+                  <span class="fontWeight_bold">message:</span> Содержит ошибку если resultCode = 1<br />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2 class="Routes-Name">Users list resourses</h2>
+      <h3 class="fontColor_gray">/users</h3>
+      <div class="Routes">
+        <div class="Routes-Block RouteBlock">
+          <div class="RouteBlock-Route fontWeight_bold">get</div>
+          <p>Получает инфу о всех пользователях</p>
+          <div class="RouteBlock-Info">
+            <div class="DropDown">
+              <input id="DropDown_users_get_response" type="checkbox" />
+              <label for="DropDown_users_get_response">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "resultCode": <span class="fontColor_red">required</span>(boolean),
+  "message": (string)
+  "data": {
+    "users": [
+      {
+        "id": <span class="fontColor_red">required</span>(number),
+        "nickname": <span class="fontColor_red">required</span>(number),
+        "email": <span class="fontColor_red">required</span>(number)
+      }
+    ]
+  }
+}                </code></pre>
+                <p class="RouteBlock-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1, если пользователь залогинен или
+                  нет<br />
+                  <span class="fontWeight_bold">message:</span> Содержит ошибку если resultCode = 1<br />
+                  <span class="fontWeight_bold">data.users:</span> Содержит массив пользователей с указанной информацией
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Routes-Block RouteBlock">
+          <div class="RouteBlock-Route fontWeight_bold">post</div>
+          <p>Позволяет зарегистрироваться</p>
+          <div class="RouteBlock-Info">
+            <div class="DropDown">
+              <input id="DropDown_users_post_request" type="checkbox" />
+              <label for="DropDown_users_post_request">Request</label>
+              <div class="DropDown-Content">
+                <pre><code>{
+  "nickname": <span class="fontColor_red">required</span>(string),
+  "email": <span class="fontColor_red">required</span>(string),
+  "password": <span class="fontColor_red">required</span>(string)
+}               </code></pre>
+              </div>
+            </div>
+            <div class="DropDown">
+              <input id="DropDown_users_post_pesponse" type="checkbox" />
+              <label for="DropDown_users_post_pesponse">Response</label>
+              <div class="DropDown-Content">
+                <pre><code>{ 
+  "resultCode": <span class="fontColor_red">required</span>(boolean),
+  "message": (string),
+  "data": {
+    "id": <span class="fontColor_red">required</span>(string),
+    "nickname": <span class="fontColor_red">required</span>(string),
+    "email": <span class="fontColor_red">required</span>(string)
+    "access_token": <span class="fontColor_red">required</span>(string)
+  }
+}                </code></pre>
+                <p class="RouteBlock-InfoDocs">
+                  <span class="fontWeight_bold">resultCode:</span> 0 или 1 успешна операция или нет<br />
+                  <span class="fontWeight_bold">message:</span> Содержит ошибку если resultCode = 1<br />
+                  <span class="fontWeight_bold">data:</span> Содержит инфу о текущем пользователе<br />
+                  <span class="fontWeight_bold">data.access_token:</span> Токен авторизации для пользователя
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="ConvenientMovementBlock"></div>
   </body>
 </html>
